@@ -3,15 +3,15 @@ import openSocket from "socket.io-client";
 
 const SOCKET_URL = "https://chatwithds.dsdinesh.me:2053"
 
+let socket;
 
 export const SocketService = () => {
 
     const setupSocket = () => {
-        let socket = openSocket(SOCKET_URL);
+        socket = openSocket(SOCKET_URL);
         
         socket.on("command", (data) => {
             console.log(data);
-            console.log(socket);
         });
     };
 
@@ -29,3 +29,7 @@ export const SocketService = () => {
         content: data.content,
     });
 };*/
+
+export const sendTestSocket = (data) => {
+    socket.emit("command", data);
+};

@@ -2,19 +2,22 @@ import React, { createContext, useReducer } from "react";
 import {
     updateChatReducer,
     updateChatState,
+    userDetailState,
+    userDetailReducer
   } from "./reducers";
 
 
-const reduceReducers = (...reducers) => (prevstate, value, ...args) => {
+const reduceReducers = (...reducers) => (prevstate, value, ...args) => 
     reducers.reduce(
         (newState, reducer) => reducer(newState, value, ...args), prevstate
     );
-};  
 
-const combinedReducers = reduceReducers(updateChatReducer);
+
+const combinedReducers = reduceReducers(updateChatReducer, userDetailReducer);
 
 const initialState = {
       ...updateChatState,
+      ...userDetailState,
   }  
 
 const store = createContext(initialState)

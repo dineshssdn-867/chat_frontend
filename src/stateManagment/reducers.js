@@ -10,6 +10,10 @@ export const updateChatState = {
     chatState: false,
 };
 
+export const userDetailState = {
+    userDetail: "",
+};
+
 export const updateChatReducer = (state, action) => {
     if(action.type === updateChatAction){
         return {
@@ -21,3 +25,13 @@ export const updateChatReducer = (state, action) => {
     }
 }
 
+export const userDetailReducer = (state, action) => {
+    if(action.type === userDetailAction){
+        return {
+            ...state,
+            userDetail: action.payload,
+        };
+    } else {
+        return state;
+    }
+}
