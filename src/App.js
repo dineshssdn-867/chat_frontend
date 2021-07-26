@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
 import {store} from './stateManagment/store';
 import {
-  userDetailAction,
+  userDetailAction,activeChatAction
 } from "./stateManagment/actions";
 import { sendTestSocket } from './Components/socketService';
+import { activeChat } from './stateManagment/reducers';
 
 
 const SimpleMessage = (props) => {
@@ -44,11 +45,15 @@ const MessageInterface = (props) => {
   const [messages, setMessages ] = useState([]);
   const [receiver, setReceiver] = useState('');
 
-  const { state: { userDetail }, } = useContext(store);
+  const { state: { userDetail, activeChat },dispatch } = useContext(store);
 
   useEffect(() => {
     if(name != userDetail ) { setName(userDetail) }
-  }, [userDetail])
+    if(activeChat){ 
+      setMessages([...messages, activeChat]); 
+      dispatch({type: activeChatAction, payload: null });
+    }
+  }, [userDetail, activeChat])
 
   const submit = (e) => {
     e.preventDefault();
@@ -77,7 +82,8 @@ const MessageInterface = (props) => {
         messages.map((item, index) => {
           return (
             <div key={index}>
-              <h4>{item.message}</h4>
+              <b>{item.message}</b>
+              <br />
               <small>{item.sender}</small>
             </div>
           );
