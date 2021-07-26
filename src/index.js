@@ -5,11 +5,12 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { StoreProvider } from './stateManagment/store';
 import { SocketService } from "./Components/socketService";
+import Router from  './Routes/router';
 
 ReactDOM.render(
   <React.StrictMode>
     <StoreProvider>
-        <App />
+        <Router />
         <SocketService />
     </StoreProvider>
   </React.StrictMode>,

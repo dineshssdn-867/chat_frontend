@@ -4,7 +4,6 @@ import {
   userDetailAction,activeChatAction
 } from "./stateManagment/actions";
 import { sendTestSocket } from './Components/socketService';
-import { activeChat } from './stateManagment/reducers';
 
 
 const SimpleMessage = (props) => {
@@ -48,7 +47,7 @@ const MessageInterface = (props) => {
   const { state: { userDetail, activeChat },dispatch } = useContext(store);
 
   useEffect(() => {
-    if(name != userDetail ) { setName(userDetail) }
+    if(name !== userDetail ) { setName(userDetail) }
     if(activeChat){ 
       setMessages([...messages, activeChat]); 
       dispatch({type: activeChatAction, payload: null });
