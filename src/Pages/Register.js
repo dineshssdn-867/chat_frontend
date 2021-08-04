@@ -24,7 +24,6 @@ function Register() {
       }
 
   };
-
   const onChange = (e) => {
       setregisterData({
           ...registerData,

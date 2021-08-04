@@ -4,8 +4,15 @@ import Loader from '../Components/loader';
 import { axiosHandler, errorHandler } from "../helper";
 import { LOGIN_URL } from '../urls';
 
-export default function Login() {
+const loginRequest = async (logindata) => {
+    return await axiosHandler({
+        method: 'post',
+        url: LOGIN_URL,
+        data: logindata
+    }).catch((e) => setError(errorHandler(e)));
+}
 
+export default function Login() {
     const [loginData, setLoginData ] = useState({});
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
@@ -14,11 +21,7 @@ export default function Login() {
         e.preventDefault();
         setLoading(true);
         setError(null);
-        const result = await axiosHandler({
-            method: "post",
-            url: LOGIN_URL,
-            data: loginData,
-        }).catch((e) => setError(errorHandler(e)));
+        const result = await loginRequest(logindata);
         setLoading(false);
         if(result){
         }
