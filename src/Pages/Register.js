@@ -1,10 +1,10 @@
 import React, {useState, useContext} from 'react';
 import { Link } from "react-router-dom";
-import { AuthForm } from "./Login";
+import { AuthForm, loginRequest } from "./Login";
 import { axiosHandler, errorHandler } from "../helper";
 import { REGISTER_URL } from "../urls";
 
-function Register() {
+export const Register = (props) => {
   const [registerData, setregisterData ] = useState({});
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -20,15 +20,14 @@ function Register() {
       }).catch((e) => setError(errorHandler(e)));
       setLoading(false);
       if(result){
-
+        await loginRequest(registerData, setError, props)
       }
-
+      setLoading(false);
   };
   const onChange = (e) => {
       setregisterData({
           ...registerData,
           [e.target.name]: e.target.value,
-          'email':'dineshnariyani20@gmail.com'
         });
   };
     return (
@@ -45,4 +44,4 @@ function Register() {
       );
 }
 
-export default Register;
+

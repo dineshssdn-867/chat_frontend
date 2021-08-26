@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import Login from "../Pages/Login";
-import Register from "../Pages/Register";
+import { Login } from "../Pages/Login";
+import { Register } from "../Pages/Register";
 import Home from "../Pages/Home";
 import "../styles/style.scss";
 import AuthController from "../Pages/authcontroller";

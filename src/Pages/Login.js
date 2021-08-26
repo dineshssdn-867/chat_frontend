@@ -3,16 +3,21 @@ import { Link } from "react-router-dom";
 import Loader from '../Components/loader';
 import { axiosHandler, errorHandler } from "../helper";
 import { LOGIN_URL } from '../urls';
+import {tokenName} from './authcontroller';
 
-const loginRequest = async (logindata) => {
-    return await axiosHandler({
+export const loginRequest = async (data, setError, props) => {
+    const result = await axiosHandler({
         method: 'post',
+        data: data,
         url: LOGIN_URL,
-        data: logindata
     }).catch((e) => setError(errorHandler(e)));
+    if(result){
+        localStorage.setItem(tokenName, JSON.stringify(result.data));
+        props.history.push("/");
+    }
 }
 
-export default function Login() {
+export const Login = (props) => {
     const [loginData, setLoginData ] = useState({});
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
@@ -21,11 +26,8 @@ export default function Login() {
         e.preventDefault();
         setLoading(true);
         setError(null);
-        const result = await loginRequest(logindata);
+        await loginRequest(loginData, setError, props);
         setLoading(false);
-        if(result){
-        }
-
     };
 
     const onChange = (e) => {
@@ -69,6 +71,18 @@ export const AuthForm = (props) => {
     )}
     <form onSubmit={props.onSubmit}>
             <input value={props.data.username} onChange={props.onChange} name="username" className="input-field" placeholder="Username" autoComplete="off" required/>
+            {!props.login && (
+            <div className="input-container">
+                <input
+                className="input-field"
+                placeholder="Email Address"
+                value={props.data.email}
+                name="email"
+                onChange={props.onChange}
+                required
+                />
+            </div>
+            )}
             <div className="input-container">
                 <input value={props.data.password} onChange={props.onChange} name="password" className="input-field" placeholder="Password" type={!props.showPassword ? "password" : "text"} autoComplete="off" required/>
                 <img
