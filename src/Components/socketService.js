@@ -22,7 +22,7 @@ export const SocketService = () => {
             dispatch({type: activeChatAction, payload: data});
         });
     };
-
+    // eslint-disable-next-line
     useEffect(setupSocket, [userDetail]);
 
     return <></>;

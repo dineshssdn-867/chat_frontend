@@ -7,20 +7,22 @@ import "../styles/style.scss";
 import AuthController from "../Pages/authcontroller";
 
 const Router = () => {
-    return <BrowserRouter>
+    return (
+      <BrowserRouter>
         <Switch>
-            <Route path='/login' component={Login} exact />
-            <Route path='/register' component={Register} exact />
-            <Route
-                path="/"
-                component={(props) => (
-                    <AuthController {...props}>
-                    <Route path="/" component={Home} exact />
-                    </AuthController>
-                )}
-                />
+          <Route path="/login" component={Login} exact />
+          <Route path="/register" component={Register} exact />
+          <Route
+            path="/"
+            component={(props) => (
+              <AuthController {...props}>
+                <Route path="/" component={Home} exact />
+              </AuthController>
+            )}
+          />
         </Switch>
-    </BrowserRouter>
-}
-
+      </BrowserRouter>
+    );
+  };
+  
 export default Router;

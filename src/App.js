@@ -1,93 +1,105 @@
-import React, { useState, useEffect, useContext } from 'react';
-import {store} from './stateManagment/store';
-import {
-  userDetailAction,activeChatAction
-} from "./stateManagment/actions";
-import { sendTestSocket } from './Components/socketService';
-
+import React, { useState, useEffect, useContext } from "react";
+import { activeChatAction, userDetailAction } from "./stateManagment/actions";
+import { store } from "./stateManagment/store";
+import { sendTestSocket } from "./Components/socketService";
 
 const SimpleMessage = (props) => {
   const [name, setName] = useState("");
   const [showMessage, setShowMessage] = useState(false);
 
-  const {dispatch} = useContext(store);
+  const { dispatch } = useContext(store);
 
   const onsubmit = (e) => {
     e.preventDefault();
-    dispatch({type: userDetailAction, payload: name});
+    dispatch({ type: userDetailAction, payload: name });
     setShowMessage(true);
   };
 
   return (
-    <div>
+    <>
       {!showMessage ? (
-      <div>  
-        <h3>Hello there, Please Enter your name</h3>
-        <form onSubmit={onsubmit}>
-          <input value={name} onChange={(e) => setName(e.target.value) } />
-          <button type="submit">Submit</button>
-        </form>
-      </div>  
+        <div>
+          <h3>Hello there, Please Enter your name</h3>
+          <form onSubmit={onsubmit}>
+            <input value={name} onChange={(e) => setName(e.target.value)} />
+            <button type="submit">submit</button>
+          </form>
+        </div>
       ) : (
-      <MessageInterface />
+        <MessageInterface />
       )}
-    </div>
+    </>
   );
-}
+};
 
 export default SimpleMessage;
 
-
 const MessageInterface = (props) => {
   const [name, setName] = useState("");
-  const [message, setMessage ] = useState('')
-  const [messages, setMessages ] = useState([]);
-  const [receiver, setReceiver] = useState('');
+  const [message, setMessage] = useState("");
+  const [receiver, setReceiver] = useState("");
+  const [messages, setMessages] = useState([]);
 
-  const { state: { userDetail, activeChat },dispatch } = useContext(store);
+  const {
+    state: { userDetail, activeChat },
+    dispatch,
+  } = useContext(store);
 
   useEffect(() => {
-    if(name !== userDetail ) { setName(userDetail) }
-    if(activeChat){ 
-      setMessages([...messages, activeChat]); 
-      dispatch({type: activeChatAction, payload: null });
+    if (name !== userDetail) {
+      setName(userDetail);
     }
-  }, [userDetail, activeChat])
+    if (activeChat) {
+      setMessages([...messages, activeChat]);
+      dispatch({ type: activeChatAction, payload: null });
+    }
+  // eslint-disable-next-line
+  }, [userDetail, activeChat]);
 
   const submit = (e) => {
     e.preventDefault();
     let data = {
       sender: name,
+      receiver,
       message,
-      receiver
     };
     setMessages([...messages, data]);
     sendTestSocket(data);
-  }
+  };
 
   return (
     <div>
       <h2>Hello {name}</h2>
       <form onSubmit={submit}>
-        <input value={receiver} onChange={(e) => setReceiver(e.target.value)} />
+        <input
+          value={receiver}
+          placeholder="enter receiver name"
+          onChange={(e) => setReceiver(e.target.value)}
+        />
         <br />
-        <textarea value={message} onChange={(e) => setMessage(e.target.value)}></textarea>
-        <button type="submit">Send</button>
+        <textarea
+          placeholder="start typing message"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+        ></textarea>
+        <br />
+        <button type="submit">send</button>
       </form>
       <br />
-      {
-        messages.length < 1 ? (
-        <div> No messages yet </div>) : (
+      {messages.length < 1 ? (
+        <div>No messages yet</div>
+      ) : (
         messages.map((item, index) => {
           return (
             <div key={index}>
               <b>{item.message}</b>
               <br />
               <small>{item.sender}</small>
+              <hr />
             </div>
           );
         })
-        )}
+      )}
     </div>
   );
 };

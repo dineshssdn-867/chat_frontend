@@ -1,7 +1,7 @@
-import React, {useState, useContext} from 'react';
+import React, {useState} from 'react';
+import { axiosHandler, errorHandler } from "../helper";
 import { Link } from "react-router-dom";
 import Loader from '../Components/loader';
-import { axiosHandler, errorHandler } from "../helper";
 import { LOGIN_URL } from '../urls';
 import {tokenName} from './authcontroller';
 
@@ -46,10 +46,10 @@ export const Login = (props) => {
             <AuthForm login data={loginData} onSubmit={submit} setError={setError}  onChange={onChange} error={error} showPassword={showPassword} loading={loading} setShowPassword={setShowPassword}/>
                 <div className="grid grid-2 grid-gap-2">
                     <div className="socialButton">
-                        <img src="https://raw.githubusercontent.com/adefemi/chatApp-frontend/master/src/assets/twitter.png" />
+                        <img src="https://raw.githubusercontent.com/adefemi/chatApp-frontend/master/src/assets/twitter.png" alt="twitter" />
                     </div>
                     <div className="socialButton">
-                        <img src="https://raw.githubusercontent.com/adefemi/chatApp-frontend/master/src/assets/google.png" />
+                        <img src="https://raw.githubusercontent.com/adefemi/chatApp-frontend/master/src/assets/google.png" alt="google" />
                     </div>
                 </div>
                 <div className="switchOption">
@@ -66,7 +66,7 @@ export const AuthForm = (props) => {
     {props.error && (
         <div className="errorHolder">
           <div dangerouslySetInnerHTML={{ __html: props.error }} />
-          <img src="https://raw.githubusercontent.com/adefemi/chatApp-frontend/master/src/assets/close-white.png" onClick={() => props.setError(null)} />
+          <img src="https://raw.githubusercontent.com/adefemi/chatApp-frontend/master/src/assets/close-white.png" alt="close-white" onClick={() => props.setError(null)} />
         </div>
     )}
     <form onSubmit={props.onSubmit}>
@@ -85,7 +85,7 @@ export const AuthForm = (props) => {
             )}
             <div className="input-container">
                 <input value={props.data.password} onChange={props.onChange} name="password" className="input-field" placeholder="Password" type={!props.showPassword ? "password" : "text"} autoComplete="off" required/>
-                <img
+                <img alt="eye-open"
                     src={!props.showPassword ? "https://raw.githubusercontent.com/adefemi/chatApp-frontend/master/src/assets/eyeopen.png" : "https://raw.githubusercontent.com/adefemi/chatApp-frontend/master/src/assets/eyeclose.png"}
                     onClick={() => props.setShowPassword(!props.showPassword)}
                 />
