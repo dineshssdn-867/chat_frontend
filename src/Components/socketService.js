@@ -22,6 +22,7 @@ export const SocketService = () => {
             dispatch({type: activeChatAction, payload: data});
         });
     };
+    console.log(userDetail);
     // eslint-disable-next-line
     useEffect(setupSocket, [userDetail]);
 
@@ -29,14 +30,13 @@ export const SocketService = () => {
 };
 
 
-
-/*const sendSocket = (data) => {
+const sendSocket = (data) => {
     socket.emit("command", {
         type: data.type,
         id: data.id,
         content: data.content,
     });
-};*/
+};
 
 export const sendTestSocket = (data) => {
     socket.emit("command", data);
