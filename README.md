@@ -16,7 +16,7 @@ Personal Project - D's Chat
 
 ## Demo💻
 
-[Demo](https://d-fantom-blog.herokuapp.com/)
+[Demo](https://d-s-chat.web.app/login)
 
 ## Environment Variables⚙
 
